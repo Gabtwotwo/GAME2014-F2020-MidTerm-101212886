@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Boundary Check")]
     public float verticalBoundary;
+    public float horizontalBoundary;
+
 
     [Header("Player Speed")]
     public float verticalSpeed;
@@ -99,16 +101,35 @@ public class PlayerController : MonoBehaviour
 
     private void _CheckBounds()
     {
-        // check right bounds
-        if (transform.position.x >= verticalBoundary)
-        {
-            transform.position = new Vector3(verticalBoundary, transform.position.y, 0.0f);
-        }
 
-        // check left bounds
-        if (transform.position.x <= -verticalBoundary)
+
+        if (Input.deviceOrientation == DeviceOrientation.Portrait)
         {
-            transform.position = new Vector3(-verticalBoundary, transform.position.y, 0.0f);
+            // check right bounds
+            if (transform.position.x >= verticalBoundary)
+            {
+                transform.position = new Vector3(verticalBoundary, transform.position.y, 0.0f);
+            }
+
+            // check left bounds
+            if (transform.position.x <= -verticalBoundary)
+            {
+                transform.position = new Vector3(-verticalBoundary, transform.position.y, 0.0f);
+            }
+        }
+        else if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight)
+        {
+            // check right bounds
+            if (transform.position.x >= verticalBoundary)
+            {
+                transform.position = new Vector3(verticalBoundary, transform.position.y, 0.0f);
+            }
+
+            // check left bounds
+            if (transform.position.x <= -verticalBoundary)
+            {
+                transform.position = new Vector3(-verticalBoundary, transform.position.y, 0.0f);
+            }
         }
 
     }
