@@ -58,13 +58,13 @@ public class PlayerController : MonoBehaviour
         {
             var worldTouch = Camera.main.ScreenToWorldPoint(touch.position);
 
-            if (worldTouch.x > transform.position.x)
+            if (worldTouch.y > transform.position.y)
             {
                 // direction is positive
                 direction = 1.0f;
             }
 
-            if (worldTouch.x < transform.position.x)
+            if (worldTouch.y < transform.position.y)
             {
                 // direction is negative
                 direction = -1.0f;
@@ -75,25 +75,25 @@ public class PlayerController : MonoBehaviour
         }
 
         // keyboard support
-        if (Input.GetAxis("Horizontal") >= 0.1f) 
+        if (Input.GetAxis("Vertical") >= 0.1f) 
         {
             // direction is positive
             direction = 1.0f;
         }
 
-        if (Input.GetAxis("Horizontal") <= -0.1f)
+        if (Input.GetAxis("Vertical") <= -0.1f)
         {
             // direction is negative
             direction = -1.0f;
         }
 
-        if (m_touchesEnded.x != 0.0f)
+        if (m_touchesEnded.y != 0.0f)
         {
-           transform.position = new Vector2(Mathf.Lerp(transform.position.x, m_touchesEnded.x, verticalTValue), transform.position.y);
+           transform.position = new Vector2(transform.position.x, Mathf.Lerp(transform.position.y, m_touchesEnded.y, verticalTValue));
         }
         else
         {
-            Vector2 newVelocity = m_rigidBody.velocity + new Vector2(direction *verticalSpeed, 0.0f);
+            Vector2 newVelocity = m_rigidBody.velocity + new Vector2(0.0f, direction * verticalSpeed);
             m_rigidBody.velocity = Vector2.ClampMagnitude(newVelocity, maxSpeed);
             m_rigidBody.velocity *= 0.99f;
         }
@@ -102,35 +102,35 @@ public class PlayerController : MonoBehaviour
     private void _CheckBounds()
     {
 
+        //Since the device orientation is always unknown, I have to stop checking against DeviceOrientation or I get no checkBounds
+        //if (Input.deviceOrientation == DeviceOrientation.Portrait)
+        //{
+        //    Debug.Log("Device Orientation Portrait");
+        //    // check right bounds
+        //    if (transform.position.x >= verticalBoundary)
+        //    {
+        //        transform.position = new Vector3(verticalBoundary, transform.position.y, 0.0f);
+        //    }
 
-        if (Input.deviceOrientation == DeviceOrientation.Portrait)
+        //    // check left bounds
+        //    if (transform.position.x <= -verticalBoundary)
+        //    {
+        //        transform.position = new Vector3(-verticalBoundary, transform.position.y, 0.0f);
+        //    }
+        //}
+        //else if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight)
+        //{
+
+        // check up bounds
+        if (transform.position.y >= verticalBoundary)
         {
-            // check right bounds
-            if (transform.position.x >= verticalBoundary)
-            {
-                transform.position = new Vector3(verticalBoundary, transform.position.y, 0.0f);
-            }
-
-            // check left bounds
-            if (transform.position.x <= -verticalBoundary)
-            {
-                transform.position = new Vector3(-verticalBoundary, transform.position.y, 0.0f);
-            }
-        }
-        else if(Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight)
-        {
-            // check right bounds
-            if (transform.position.x >= verticalBoundary)
-            {
-                transform.position = new Vector3(verticalBoundary, transform.position.y, 0.0f);
-            }
-
-            // check left bounds
-            if (transform.position.x <= -verticalBoundary)
-            {
-                transform.position = new Vector3(-verticalBoundary, transform.position.y, 0.0f);
-            }
+            transform.position = new Vector3(transform.position.x, verticalBoundary, 0.0f);
         }
 
+        // check downwards bounds
+        if (transform.position.y <= -verticalBoundary)
+        {
+            transform.position = new Vector3(transform.position.x,-verticalBoundary, 0.0f);
+        }
     }
 }

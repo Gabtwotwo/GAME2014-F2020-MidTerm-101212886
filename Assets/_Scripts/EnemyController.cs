@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+
+    //Changed the code to affect the enemies in a vertical manner. New bound values assigned, and changing code to affect them in the Y axis, not the X axis.
     public float verticalSpeed;
     public float verticalBoundary;
     public float direction;

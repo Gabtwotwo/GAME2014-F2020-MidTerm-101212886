@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BackgroundController : MonoBehaviour
 {
+
+    //Changed the bounds to horizontal, code simply changed to affect the X axis as opposed to the Y axis.
     public float horizontalSpeed;
     public float horizontalBoundary;
 
