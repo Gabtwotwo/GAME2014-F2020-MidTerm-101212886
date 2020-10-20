@@ -1,9 +1,18 @@
-﻿using System.Collections;
+﻿//--------------------------------------------------
+// Gabriel Villeneuve, 101212886
+// BulletController.cs
+// Moves the bullets that have been fired at random
+// Last Modified 2020-10-20
+//--------------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour, IApplyDamage
 {
+
+    //More detailed variables on what the bullets do. Same application for other .cs scripts so far.
     public float verticalSpeed;
     public float verticalBoundary;
     public BulletManager bulletManager;
@@ -12,6 +21,7 @@ public class BulletController : MonoBehaviour, IApplyDamage
     // Start is called before the first frame update
     void Start()
     {
+        //Find our bullet manager in the scene
         bulletManager = FindObjectOfType<BulletManager>();
     }
 
@@ -37,12 +47,18 @@ public class BulletController : MonoBehaviour, IApplyDamage
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+
+        //This would let us know what the bullet hit
         //Debug.Log(other.gameObject.name);
+
+        //Bring the bullet back into the bullet manager pool, if it hits anything.
         bulletManager.ReturnBullet(gameObject);
     }
 
     public int ApplyDamage()
     {
+
+        //Doesn't do much right now
         return damage;
     }
 }

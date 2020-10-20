@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿//------------------------------------------
+// Gabriel Villeneuve, 101212886
+// BackgroundController.cs
+// Allows for seamless background scrolling
+// Last Modified 2020-10-20
+//------------------------------------------
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,25 +13,37 @@ public class BackgroundController : MonoBehaviour
 {
 
     //Changed the bounds to horizontal, code simply changed to affect the X axis as opposed to the Y axis.
+
+    //Horizontal speed of the backgrounds
     public float horizontalSpeed;
+
+    //Boundary at which the backgrounds reset themselves
     public float horizontalBoundary;
 
     // Update is called once per frame
     void Update()
     {
+
+        //Move the backgrounds
         _Move();
+
+        //Verify that the backgrounds are in the proper boundary
         _CheckBounds();
-        //CheckForChange();
+
  
     }
 
     private void _Reset()
     {
+
+        //Set the position of the background back to the front of the screen on reset
         transform.position = new Vector3(horizontalBoundary, 0.0f);
     }
 
     private void _Move()
     {
+
+        //Slowly and smoothly (thanks, DeltaTime) scrolls the background from the right to the left
         transform.position -= new Vector3(horizontalSpeed, 0.0f) * Time.deltaTime;
     }
 
@@ -37,30 +56,4 @@ public class BackgroundController : MonoBehaviour
         }
     }
 
-
-    void CheckForChange()
-    {
-        //This code always returned unknown so I abandoned it
-            switch (Input.deviceOrientation)
-            {
-                case DeviceOrientation.Unknown:
-                    //code
-                    Debug.Log("Unknown");
-                    break;
-                case DeviceOrientation.Portrait:
-                    //code
-                    Debug.Log("Portrait");
-                    break;
-                case DeviceOrientation.LandscapeLeft:
-                    //code
-                    Debug.Log("Landscape Left");
-                    break;
-                case DeviceOrientation.LandscapeRight:
-                    //code
-                    Debug.Log("Landscape Right");
-                    break;
-
-
-            }
-    }
 }
